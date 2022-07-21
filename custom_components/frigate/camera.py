@@ -152,7 +152,7 @@ class FrigateCamera(FrigateMQTTEntity, Camera):  # type: ignore[misc]
                 **self._camera_config
             )
         else:
-            self._stream_source = f"rtmp://{URL(self._url).host}/live/{self._cam_name}"
+            self._stream_source = f"rtmp://{URL(self._url).host}:9123/live/{self._cam_name}"
 
     @callback  # type: ignore[misc]
     def _state_message_received(self, msg: ReceiveMessage) -> None:
