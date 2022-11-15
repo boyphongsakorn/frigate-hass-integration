@@ -6,21 +6,6 @@ FRIGATE_VERSION_ERROR_CUTOFF = "0.8.4"
 FRIGATE_RELEASES_URL = "https://github.com/blakeblackshear/frigate/releases"
 FRIGATE_RELEASE_TAG_URL = f"{FRIGATE_RELEASES_URL}/tag"
 
-# Icons
-ICON_CAR = "mdi:shield-car"
-ICON_CAT = "mdi:cat"
-ICON_CONTRAST = "mdi:contrast-circle"
-ICON_CORAL = "mdi:scoreboard-outline"
-ICON_DOG = "mdi:dog-side"
-ICON_FILM_MULTIPLE = "mdi:filmstrip-box-multiple"
-ICON_IMAGE_MULTIPLE = "mdi:image-multiple"
-ICON_MOTION_SENSOR = "hass:motion-sensor"
-ICON_MOTORCYCLE = "mdi:motorbike"
-ICON_OTHER = "mdi:shield-alert"
-ICON_PERSON = "mdi:shield-account"
-ICON_SERVER = "mdi:server"
-ICON_SPEEDOMETER = "mdi:speedometer"
-
 # Platforms
 BINARY_SENSOR = "binary_sensor"
 NUMBER = "number"
@@ -55,6 +40,7 @@ CONF_NOTIFICATION_PROXY_ENABLE = "notification_proxy_enable"
 CONF_PASSWORD = "password"
 CONF_PATH = "path"
 CONF_RTMP_URL_TEMPLATE = "rtmp_url_template"
+CONF_NOTIFICATION_PROXY_EXPIRE_AFTER_SECONDS = "notification_proxy_expire_after_seconds"
 
 # Defaults
 DEFAULT_NAME = DOMAIN

@@ -61,6 +61,7 @@ class FrigateApiClient:
         limit: int | None = None,
         has_clip: bool | None = None,
         has_snapshot: bool | None = None,
+        decode_json: bool = True,
     ) -> list[dict[str, Any]]:
         """Get data from the API."""
         params = {
@@ -72,6 +73,7 @@ class FrigateApiClient:
             "limit": limit,
             "has_clip": int(has_clip) if has_clip is not None else None,
             "has_snapshot": int(has_snapshot) if has_snapshot is not None else None,
+            "include_thumbnails": 0,
         }
 
         return cast(
@@ -83,6 +85,7 @@ class FrigateApiClient:
                     / "api/events"
                     % {k: v for k, v in params.items() if v is not None}
                 ),
+                decode_json=decode_json,
             ),
         )
 
@@ -90,6 +93,7 @@ class FrigateApiClient:
         self,
         has_clip: bool | None = None,
         has_snapshot: bool | None = None,
+        decode_json: bool = True,
     ) -> list[dict[str, Any]]:
         """Get data from the API."""
         params = {
@@ -106,6 +110,7 @@ class FrigateApiClient:
                     / "api/events/summary"
                     % {k: v for k, v in params.items() if v is not None}
                 ),
+                decode_json=decode_json,
             ),
         )
 
@@ -120,52 +125,51 @@ class FrigateApiClient:
         """Get data from the API."""
         return await self.api_wrapper("get", str(URL(self._host) / f"{path}/"))
 
-    async def async_retain(self, event_id: str, retain: bool) -> dict[str, Any]:
+    async def async_retain(
+        self, event_id: str, retain: bool, decode_json: bool = True
+    ) -> dict[str, Any] | str:
         """Un/Retain an event."""
-        return cast(
-            dict[str, Any],
-            await self.api_wrapper(
-                "post" if retain else "delete",
-                str(URL(self._host) / f"api/events/{event_id}/retain"),
-                decode_json=True,
-            ),
+        result = await self.api_wrapper(
+            "post" if retain else "delete",
+            str(URL(self._host) / f"api/events/{event_id}/retain"),
+            decode_json=decode_json,
         )
+        return cast(dict[str, Any], result) if decode_json else result
 
-    async def async_get_recordings_summary(self, camera: str) -> dict[str, Any]:
+    async def async_get_recordings_summary(
+        self, camera: str, decode_json: bool = True
+    ) -> dict[str, Any] | str:
         """Get recordings summary."""
-        return cast(
-            dict[str, Any],
-            await self.api_wrapper(
-                "get",
-                str(URL(self._host) / f"api/{camera}/recordings/summary"),
-                decode_json=True,
-            ),
+        result = await self.api_wrapper(
+            "get",
+            str(URL(self._host) / f"api/{camera}/recordings/summary"),
+            decode_json=decode_json,
         )
+        return cast(dict[str, Any], result) if decode_json else result
 
     async def async_get_recordings(
         self,
         camera: str,
         after: int | None = None,
         before: int | None = None,
-    ) -> dict[str, Any]:
+        decode_json: bool = True,
+    ) -> dict[str, Any] | str:
         """Get recordings."""
         params = {
             "after": after,
             "before": before,
         }
 
-        return cast(
-            dict[str, Any],
-            await self.api_wrapper(
-                "get",
-                str(
-                    URL(self._host)
-                    / f"api/{camera}/recordings"
-                    % {k: v for k, v in params.items() if v is not None}
-                ),
-                decode_json=True,
+        result = await self.api_wrapper(
+            "get",
+            str(
+                URL(self._host)
+                / f"api/{camera}/recordings"
+                % {k: v for k, v in params.items() if v is not None}
             ),
+            decode_json=decode_json,
         )
+        return cast(dict[str, Any], result) if decode_json else result
 
     async def api_wrapper(
         self,

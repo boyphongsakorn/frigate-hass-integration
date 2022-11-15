@@ -14,20 +14,20 @@ from pytest_homeassistant_custom_component.common import (
 
 from custom_components.frigate import SCAN_INTERVAL
 from custom_components.frigate.api import FrigateApiClientError
-from custom_components.frigate.const import (
-    DOMAIN,
-    FPS,
+from custom_components.frigate.const import DOMAIN, FPS, MS, NAME
+from custom_components.frigate.icons import (
+    ICON_BICYCLE,
     ICON_CAR,
     ICON_CAT,
     ICON_CORAL,
+    ICON_COW,
     ICON_DOG,
+    ICON_HORSE,
     ICON_MOTORCYCLE,
     ICON_OTHER,
     ICON_PERSON,
     ICON_SERVER,
     ICON_SPEEDOMETER,
-    MS,
-    NAME,
 )
 from homeassistant.const import TEMP_CELSIUS
 from homeassistant.core import HomeAssistant
@@ -107,6 +107,9 @@ async def test_object_count_sensor(hass: HomeAssistant) -> None:
         ("dog", ICON_DOG),
         ("cat", ICON_CAT),
         ("motorcycle", ICON_MOTORCYCLE),
+        ("bicycle", ICON_BICYCLE),
+        ("cow", ICON_COW),
+        ("horse", ICON_HORSE),
         ("SOMETHING_ELSE", ICON_OTHER),
     ],
 )
